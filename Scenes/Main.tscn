@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cck0cpo3t60yr"]
+
+[node name="Main" type="Node2D"]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="World"]
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Player"]
+
+[node name="Gun" type="Marker2D" parent="World/Player"]
+
+[node name="DashTrail" type="Sprite2D" parent="World/Player"]
+
+[node name="EnemySpawner" type="Node" parent="World"]
+
+[node name="WaveDirector" type="Node" parent="World"]
+
+[node name="Camera2D" type="Camera2D" parent="World"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RunHUD" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer/RunHUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WaveLabel" type="Label" parent="CanvasLayer/RunHUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer/RunHUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/RunHUD"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
