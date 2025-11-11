@@ -1,16 +1,25 @@
-[gd_scene format=3 uid="uid://cck0cpo3t60yr"]
+[gd_scene load_steps=2 format=3 uid="uid://cck0cpo3t60yr"]
+
+[ext_resource type="Script" uid="uid://dxs3cirbm6vb8" path="res://Scripts/Entities/PlayerController.cs" id="1_r150o"]
 
 [node name="Main" type="Node2D"]
 
 [node name="World" type="Node2D" parent="."]
 
 [node name="Player" type="CharacterBody2D" parent="World"]
+script = ExtResource("1_r150o")
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Player"]
 
 [node name="Gun" type="Marker2D" parent="World/Player"]
 
 [node name="DashTrail" type="Sprite2D" parent="World/Player"]
+
+[node name="ColorRect" type="ColorRect" parent="World/Player"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
 
 [node name="EnemySpawner" type="Node" parent="World"]
 
