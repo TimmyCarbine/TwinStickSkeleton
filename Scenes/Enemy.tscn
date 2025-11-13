@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnb8cfo4iiele"]
+
+[ext_resource type="Script" uid="uid://b5iyle8dg23af" path="res://Scripts/Damageable.cs" id="1_m1htj"]
+[ext_resource type="Script" uid="uid://c5uymjd23pjre" path="res://Scripts/EnemyChase.cs" id="1_wovta"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wovta"]
+size = Vector2(32, 32)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_wovta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wovta")
+debug_color = Color(0.9742195, 0, 0.4317933, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Damageable" type="Node" parent="."]
+script = ExtResource("1_m1htj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+color = Color(1, 0.0627451, 0.45882353, 1)
