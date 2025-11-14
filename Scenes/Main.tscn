@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cck0cpo3t60yr"]
+[gd_scene load_steps=9 format=3 uid="uid://cck0cpo3t60yr"]
 
 [ext_resource type="Script" uid="uid://dxs3cirbm6vb8" path="res://Scripts/PlayerController.cs" id="1_r150o"]
 [ext_resource type="Script" uid="uid://be75wvtg6pdjl" path="res://Scripts/Weapon.cs" id="2_kln2b"]
 [ext_resource type="PackedScene" uid="uid://c31mug2gwwbf" path="res://Scenes/Bullet.tscn" id="3_rgh2o"]
+[ext_resource type="Script" uid="uid://b5iyle8dg23af" path="res://Scripts/Damageable.cs" id="4_50glp"]
 [ext_resource type="Script" uid="uid://f3f2iclth4og" path="res://Scripts/EnemySpawner.cs" id="4_pbw6q"]
 [ext_resource type="PackedScene" uid="uid://bnb8cfo4iiele" path="res://Scenes/Enemy.tscn" id="4_rgh2o"]
 [ext_resource type="Script" uid="uid://qn3jqcgxx18i" path="res://Scripts/WaveDirector.cs" id="6_v1gob"]
+[ext_resource type="Script" uid="uid://dniskch8r14av" path="res://Scripts/RunHud.cs" id="8_vy5pj"]
 
 [node name="Main" type="Node2D"]
 
@@ -26,6 +28,9 @@ MuzzlePath = NodePath("Muzzle")
 
 [node name="DashTrail" type="Sprite2D" parent="World/Player"]
 
+[node name="Damageable" type="Node" parent="World/Player"]
+script = ExtResource("4_50glp")
+
 [node name="ColorRect" type="ColorRect" parent="World/Player"]
 offset_left = -16.0
 offset_top = -16.0
@@ -37,10 +42,15 @@ script = ExtResource("4_pbw6q")
 PlayerPath = NodePath("../Player")
 EnemyScenes = Array[PackedScene]([ExtResource("4_rgh2o")])
 EnemyWeights = PackedFloat32Array(1)
+SpawnRingRadius = 800.0
+MinSeparationFromPlayer = 300.0
 
 [node name="WaveDirector" type="Node" parent="World"]
 script = ExtResource("6_v1gob")
 SpawnerPath = NodePath("../EnemySpawner")
+WaveDuration = 25.0
+MaxAliveBase = 8
+MaxAlivePerWave = 2
 
 [node name="Camera2D" type="Camera2D" parent="World"]
 
@@ -48,9 +58,17 @@ SpawnerPath = NodePath("../EnemySpawner")
 
 [node name="RunHUD" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_vy5pj")
+WaveDirectorPath = NodePath("../../World/WaveDirector")
+PlayerDamagablePath = NodePath("../../World/Player/Damageable")
+WaveLabelPath = NodePath("WaveLabel")
+TimerLabelPath = NodePath("TimerLabel")
+HealthBarPath = NodePath("HealthBar")
 
 [node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer/RunHUD"]
 layout_mode = 0
@@ -58,16 +76,33 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="WaveLabel" type="Label" parent="CanvasLayer/RunHUD"]
-layout_mode = 0
-offset_right = 40.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
 offset_bottom = 23.0
+grow_horizontal = 2
+horizontal_alignment = 1
 
 [node name="TimerLabel" type="Label" parent="CanvasLayer/RunHUD"]
-layout_mode = 0
-offset_right = 40.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
 offset_bottom = 23.0
+grow_horizontal = 0
 
 [node name="RestartButton" type="Button" parent="CanvasLayer/RunHUD"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0

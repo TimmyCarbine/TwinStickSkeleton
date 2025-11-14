@@ -3,6 +3,7 @@ using Godot;
 public partial class Damageable : Node
 {
     [Signal] public delegate void DiedEventHandler();
+    [Signal] public delegate void HealthChangedEventHandler(float current, float max);
 
     [Export] public float MaxHealth = 30f;
     public float CurrentHealth;
@@ -12,6 +13,7 @@ public partial class Damageable : Node
     public void ApplyDamage(float amount)
     {
         CurrentHealth -= amount;
+        EmitSignal(SignalName.HealthChanged, CurrentHealth, MaxHealth);
         if (CurrentHealth <= 0f)
         {
             EmitSignal(SignalName.Died);

@@ -25,6 +25,11 @@ public partial class WaveDirector : Node
     private int _waveIndex = 0;
     private float _spawnBudget = 0f;
 
+    // === PUBLIC GETTERS ===
+    public int WaveIndex => _waveIndex;
+    public bool InWave => _inWave;
+    public float TimeRemaining => _timer;
+
     // === READY ===
     public override void _Ready()
     {
