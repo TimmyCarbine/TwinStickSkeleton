@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cck0cpo3t60yr"]
+[gd_scene load_steps=10 format=3 uid="uid://cck0cpo3t60yr"]
 
 [ext_resource type="Script" uid="uid://dxs3cirbm6vb8" path="res://Scripts/PlayerController.cs" id="1_r150o"]
 [ext_resource type="Script" uid="uid://be75wvtg6pdjl" path="res://Scripts/Weapon.cs" id="2_kln2b"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://bnb8cfo4iiele" path="res://Scenes/Enemy.tscn" id="4_rgh2o"]
 [ext_resource type="Script" uid="uid://qn3jqcgxx18i" path="res://Scripts/WaveDirector.cs" id="6_v1gob"]
 [ext_resource type="Script" uid="uid://dniskch8r14av" path="res://Scripts/RunHud.cs" id="8_vy5pj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50glp"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Main" type="Node2D"]
 
@@ -66,43 +69,78 @@ grow_vertical = 2
 script = ExtResource("8_vy5pj")
 WaveDirectorPath = NodePath("../../World/WaveDirector")
 PlayerDamagablePath = NodePath("../../World/Player/Damageable")
-WaveLabelPath = NodePath("WaveLabel")
-TimerLabelPath = NodePath("TimerLabel")
-HealthBarPath = NodePath("HealthBar")
+WaveLabelPath = NodePath("HUDMargin/HUDMainVBox/HUDTopHBox/WaveLabel")
+TimerLabelPath = NodePath("HUDMargin/HUDMainVBox/HUDTopHBox/TimerLabel")
+HealthBarPath = NodePath("HUDMargin/HUDMainVBox/HUDBottomHBox/HealthBar")
 
-[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer/RunHUD"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="WaveLabel" type="Label" parent="CanvasLayer/RunHUD"]
+[node name="HUDMargin" type="MarginContainer" parent="CanvasLayer/RunHUD"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
-grow_horizontal = 2
-horizontal_alignment = 1
-
-[node name="TimerLabel" type="Label" parent="CanvasLayer/RunHUD"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
-grow_horizontal = 0
-
-[node name="RestartButton" type="Button" parent="CanvasLayer/RunHUD"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = -8.0
-grow_horizontal = 0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HUDMainVBox" type="VBoxContainer" parent="CanvasLayer/RunHUD/HUDMargin"]
+layout_mode = 2
+
+[node name="HUDTopHBox" type="HBoxContainer" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox"]
+layout_mode = 2
+
+[node name="EnergyLabel" type="Label" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDTopHBox"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "999"
+
+[node name="TopBarSpacerPanelLeft" type="PanelContainer" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDTopHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_50glp")
+
+[node name="WaveLabel" type="Label" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDTopHBox"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Wave 999"
+horizontal_alignment = 1
+
+[node name="TopBarSpacerPanelRight" type="PanelContainer" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDTopHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_50glp")
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDTopHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Time Left: 00:30"
+
+[node name="HUDSpacerPanel" type="PanelContainer" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_50glp")
+
+[node name="HUDBottomHBox" type="HBoxContainer" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDBottomHBox"]
+custom_minimum_size = Vector2(300, 32)
+layout_mode = 2
+
+[node name="BottomBarSpacerPanel" type="PanelContainer" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDBottomHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_50glp")
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDBottomHBox"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Restart"
