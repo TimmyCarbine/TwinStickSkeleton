@@ -8,10 +8,12 @@ public partial class RunHud : Control
     [Export] public NodePath WaveLabelPath;
     [Export] public NodePath TimerLabelPath;
     [Export] public NodePath HealthBarPath;
+    [Export] public NodePath EnergyLabelPath;
 
+    private CurrencyManager _currencyManager;
     private WaveDirector _director;
     private Node _playerDamageableNode;
-    private Label _waveLabel, _timerLabel;
+    private Label _waveLabel, _timerLabel, _energyLabel;
     private TextureProgressBar _healthBar;
 
     private int _lastWave = -1;
@@ -19,14 +21,18 @@ public partial class RunHud : Control
 
     public override void _Ready()
     {
+        _currencyManager = GetTree().Root.GetNode<CurrencyManager>("/root/CurrencyManager");
         _director = GetNode<WaveDirector>(WaveDirectorPath);
         _playerDamageableNode = GetNode<Damageable>(PlayerDamagablePath);
         _waveLabel = GetNode<Label>(WaveLabelPath);
         _timerLabel = GetNode<Label>(TimerLabelPath);
+        _energyLabel = GetNode<Label>(EnergyLabelPath);
         _healthBar = GetNode<TextureProgressBar>(HealthBarPath);
 
         _director.WaveStarted += OnWaveStarted;
         _director.WaveEnded += OnWaveEnded;
+        _currencyManager.CurrencyChanged += OnCurrencyChanged;
+        OnCurrencyChanged(_currencyManager.Energy);
 
         var damageable = _playerDamageableNode as Damageable;
         if (damageable != null)
@@ -77,6 +83,11 @@ public partial class RunHud : Control
             _lastHp = current;
             _lastHpMax = max;
         }
+    }
+
+    private void OnCurrencyChanged(int current)
+    {
+        _energyLabel.Text = $"Cores: {current}";
     }
 
     private static string NodePathToString(NodePath p) => p == null ? "" : p.ToString();

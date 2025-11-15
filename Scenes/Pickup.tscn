@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqghpidw2eytd"]
+
+[ext_resource type="Script" uid="uid://du4ouej5qtimo" path="res://Scripts/Entities/Pickup.cs" id="1_eq05r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3av43"]
+radius = 5.8
+
+[node name="Pickup" type="Area2D"]
+collision_layer = 32
+script = ExtResource("1_eq05r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3av43")
+debug_color = Color(0.5959997, 0.37331262, 0.9989403, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -7.1
+offset_right = 10.0
+offset_bottom = 2.9
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.7853982
+color = Color(0.57254905, 0, 1, 1)

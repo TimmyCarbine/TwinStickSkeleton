@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cck0cpo3t60yr"]
+[gd_scene load_steps=11 format=3 uid="uid://cck0cpo3t60yr"]
 
 [ext_resource type="Script" uid="uid://dxs3cirbm6vb8" path="res://Scripts/PlayerController.cs" id="1_r150o"]
 [ext_resource type="Script" uid="uid://be75wvtg6pdjl" path="res://Scripts/Weapon.cs" id="2_kln2b"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://bnb8cfo4iiele" path="res://Scenes/Enemy.tscn" id="4_rgh2o"]
 [ext_resource type="Script" uid="uid://qn3jqcgxx18i" path="res://Scripts/WaveDirector.cs" id="6_v1gob"]
 [ext_resource type="Script" uid="uid://dniskch8r14av" path="res://Scripts/RunHud.cs" id="8_vy5pj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_50glp"]
+radius = 15.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50glp"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -19,6 +22,10 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [node name="Player" type="CharacterBody2D" parent="World" groups=["player"]]
 z_index = 1
 script = ExtResource("1_r150o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
+shape = SubResource("CircleShape2D_50glp")
+debug_color = Color(1, 1, 1, 0.41960785)
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Player"]
 
@@ -72,6 +79,7 @@ PlayerDamagablePath = NodePath("../../World/Player/Damageable")
 WaveLabelPath = NodePath("HUDMargin/HUDMainVBox/HUDTopHBox/WaveLabel")
 TimerLabelPath = NodePath("HUDMargin/HUDMainVBox/HUDTopHBox/TimerLabel")
 HealthBarPath = NodePath("HUDMargin/HUDMainVBox/HUDBottomHBox/HealthBar")
+EnergyLabelPath = NodePath("HUDMargin/HUDMainVBox/HUDTopHBox/EnergyLabel")
 
 [node name="HUDMargin" type="MarginContainer" parent="CanvasLayer/RunHUD"]
 layout_mode = 1
@@ -117,7 +125,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_50glp")
 [node name="TimerLabel" type="Label" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox/HUDTopHBox"]
 layout_mode = 2
 size_flags_horizontal = 10
-text = "Time Left: 00:30"
+text = "Time Left: 99:99"
 
 [node name="HUDSpacerPanel" type="PanelContainer" parent="CanvasLayer/RunHUD/HUDMargin/HUDMainVBox"]
 layout_mode = 2
