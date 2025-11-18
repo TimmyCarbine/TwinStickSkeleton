@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cck0cpo3t60yr"]
+[gd_scene load_steps=13 format=3 uid="uid://cck0cpo3t60yr"]
 
 [ext_resource type="Script" uid="uid://dxs3cirbm6vb8" path="res://Scripts/PlayerController.cs" id="1_r150o"]
 [ext_resource type="Script" uid="uid://be75wvtg6pdjl" path="res://Scripts/Weapon.cs" id="2_kln2b"]
@@ -6,8 +6,10 @@
 [ext_resource type="Script" uid="uid://b5iyle8dg23af" path="res://Scripts/Damageable.cs" id="4_50glp"]
 [ext_resource type="Script" uid="uid://f3f2iclth4og" path="res://Scripts/EnemySpawner.cs" id="4_pbw6q"]
 [ext_resource type="PackedScene" uid="uid://bnb8cfo4iiele" path="res://Scenes/Enemy.tscn" id="4_rgh2o"]
+[ext_resource type="Script" uid="uid://b60ggdb3p5n7s" path="res://Scripts/PerkApplier.cs" id="5_vy5pj"]
 [ext_resource type="Script" uid="uid://qn3jqcgxx18i" path="res://Scripts/WaveDirector.cs" id="6_v1gob"]
 [ext_resource type="Script" uid="uid://dniskch8r14av" path="res://Scripts/RunHud.cs" id="8_vy5pj"]
+[ext_resource type="Script" uid="uid://c0ey1aofoy70j" path="res://Scripts/PerkPicker.cs" id="10_bmxlf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_50glp"]
 radius = 15.0
@@ -40,6 +42,12 @@ MuzzlePath = NodePath("Muzzle")
 
 [node name="Damageable" type="Node" parent="World/Player"]
 script = ExtResource("4_50glp")
+
+[node name="PerkApplier" type="Node" parent="World/Player"]
+script = ExtResource("5_vy5pj")
+PlayerControllerPath = NodePath("..")
+WeaponPath = NodePath("../Gun")
+PlayerDamageablePath = NodePath("../Damageable")
 
 [node name="ColorRect" type="ColorRect" parent="World/Player"]
 offset_left = -16.0
@@ -152,3 +160,40 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Restart"
+
+[node name="PerkPicker" type="Control" parent="CanvasLayer/RunHUD/HUDMargin"]
+layout_mode = 2
+script = ExtResource("10_bmxlf")
+WaveDirectorPath = NodePath("../../../../World/WaveDirector")
+PerkApplierPath = NodePath("../../../../World/Player/PerkApplier")
+Button1Path = NodePath("PerkHBox/PerkButton1")
+Button2Path = NodePath("PerkHBox/PerkButton2")
+Button3Path = NodePath("PerkHBox/PerkButton3")
+
+[node name="PerkHBox" type="HBoxContainer" parent="CanvasLayer/RunHUD/HUDMargin/PerkPicker"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="PerkButton1" type="Button" parent="CanvasLayer/RunHUD/HUDMargin/PerkPicker/PerkHBox"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+
+[node name="PerkButton2" type="Button" parent="CanvasLayer/RunHUD/HUDMargin/PerkPicker/PerkHBox"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+
+[node name="PerkButton3" type="Button" parent="CanvasLayer/RunHUD/HUDMargin/PerkPicker/PerkHBox"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
